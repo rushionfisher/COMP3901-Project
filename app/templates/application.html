@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <section>
+        <div class="card-form card p-4">
+            <h2 class="h3 mb-3 fw-normal">Application Form</h2>
+            <hr>
+
+            <form method="POST" action="{{ url_for('submit_application') }}" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+                <div>
+                    {{ form.first_name.label }}
+                    {{ form.first_name(required='required') }}
+                </div>
+                <div>
+                    {{ form.last_name.label }}
+                    {{ form.last_name(required='required') }}
+                </div>
+                <div>
+                    {{ form.address.label }}
+                    {{ form.address(required='required') }}
+                </div>
+                <div>
+                    {{ form.email.label }}
+                    {{ form.email(required='required') }}
+                </div>
+                <div>
+                    {{ form.phone_number.label }}
+                    {{ form.phone_number(required='required') }}
+                </div>
+                <div>
+                    {{ form.position_applying_for.label }}
+                    {{ form.position_applying_for(required='required') }}
+                </div>
+                <div>
+                    {{ form.resume.label }}
+                    {{ form.resume(required='required') }}
+                </div>
+                <div>
+                    {{ form.cover_letter.label }}
+                    {{ form.cover_letter(required='required') }}
+                </div>
+                <button type="submit" id="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
