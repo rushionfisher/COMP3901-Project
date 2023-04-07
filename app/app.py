@@ -15,9 +15,6 @@ db_config = {
 db = mysql.connector.connect(**db_config)
 cursor = db.cursor()
 
-@app.route('/', methods=['GET'])
-def homepage():
-    return render_template('home.html')
 
 # Define a route to display the content from the database on the webpage
 @app.route('/joblisting.html', methods=['GET', 'POST'])
@@ -37,6 +34,13 @@ def joblisting():
     # Render the template and pass the data to the template
     return render_template('joblisting.html', data=data)
 
+@app.route('/', methods=['GET'])
+def homepage():
+    return render_template('home.html')
+
+@app.route('/about.html', methods=['GET'])
+def aboutpage():
+    return render_template('about.html')
 
 
 if __name__ == '__main__':
