@@ -97,6 +97,14 @@ body{
     color: #cac7ff;
 }
 
+.searchbar input:-webkit-autofill,
+.searchbar input:-webkit-autofill:hover, 
+.searchbar input:-webkit-autofill:focus, 
+.searchbar input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+
 ::placeholder{
     padding-left: 10px;
     letter-spacing: 1px;
