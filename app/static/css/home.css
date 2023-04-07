@@ -80,13 +80,8 @@ body{
 }
 
 .message img{
-<<<<<<< HEAD
     height: 150px;
     width: 150px;
-=======
-    height: 250px;
-    width: 250px;
->>>>>>> 245162b3aa9d4c272987744af4ce54079f854fcd
 }
 
 .loginbtn{
