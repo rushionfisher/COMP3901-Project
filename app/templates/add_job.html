@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Job</title>
+  </head>
+  <body>
+    <h1>Add Job</h1>
+    <form method="POST" action="{{ url_for('add_job_post', admin='true') }}">
+      <label for="jobTitle">Job Title:</label>
+      <input type="text" id="jobTitle" name="jobTitle" required>
+      <br>
+      <label for="employer">Employer:</label>
+      <input type="text" id="employer" name="employer" required>
+      <br>
+      <label for="jobDescription">Job Description:</label>
+      <textarea id="jobDescription" name="jobDescription" required></textarea>
+      <br>
+      <label for="status">Status:</label>
+      <input type="text" id="status" name="status" required>
+      <br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <label for="DatePosted">Date Posted:</label>
+      <input type="date" id="DatePosted" name="DatePosted" required>
+      <br>
+      <button type="submit">Add Job</button>
+    </form>
+  </body>
+</html>
