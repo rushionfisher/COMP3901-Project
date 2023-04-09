@@ -4,21 +4,22 @@ from app import app
 
 
 # MySQL database configuration
-db_config = {
-    'user': 'root',
-    'password': '',
-    'host': 'localhost',
-    'database': 'jobListings',
-}
-
-# Connect to the database
-db = mysql.connector.connect(**db_config)
-cursor = db.cursor()
 
 # Define a route to display the content from the database on the webpage
 @app.route('/joblisting.html', methods=['GET', 'POST'])
 def joblisting():
     # Handle search form submission
+    db_config = {
+    'user': 'root',
+    'password': '',
+    'host': 'localhost',
+    'database': 'jobListings',
+    }
+
+    # Connect to the database
+    db = mysql.connector.connect(**db_config)
+    cursor = db.cursor()
+
     if request.method == 'POST':
         search_term = request.form['search']
         query = f"SELECT jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%'"
@@ -31,7 +32,7 @@ def joblisting():
         data = cursor.fetchall()
     is_admin = 'true'
     # Render the template and pass the data to the template
-    return render_template('joblisting.html', data=data, is_admin=is_admin)
+    return render_template('joblisting.html', data=data, is_admin=is_admin )
 
 @app.route('/add_job', methods=['GET'])
 def add_job():
@@ -39,6 +40,17 @@ def add_job():
 
 @app.route('/add_job', methods=['POST'])
 def add_job_post():
+    db_config = {
+    'user': 'root',
+    'password': '',
+    'host': 'localhost',
+    'database': 'jobListings',
+    }
+
+    # Connect to the database
+    db = mysql.connector.connect(**db_config)
+    cursor = db.cursor()
+
     jobTitle = request.form['jobTitle']
     employer = request.form['employer']
     jobDescription = request.form['jobDescription']
@@ -46,16 +58,19 @@ def add_job_post():
     email = request.form['email']
     DatePosted = request.form['DatePosted']
 
-    # Insert the new job into the database
-    query = "INSERT INTO jobs (jobTitle, employer, jobDescription, status, email, DatePosted) VALUES (%s, %s, %s, %s, %s, %s)"
-    values = (jobTitle, employer, jobDescription, status, email, DatePosted)
+    # Get the highest existing job ID from the database
+    cursor.execute("SELECT MAX(jobID) FROM jobs")
+    result = cursor.fetchone()
+    highest_id = result[0] if result[0] else 0
+
+    # Insert the new job into the database with the correct ID
+    query = "INSERT INTO jobs (jobID, jobTitle, employer, jobDescription, status, email, DatePosted) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    values = (highest_id + 1, jobTitle, employer, jobDescription, status, email, DatePosted)
     cursor.execute(query, values)
     db.commit()
     cursor.close()
     db.close()
-
-    flash('Job added successfully!')
-    return redirect(url_for('job_list'))
+    return redirect(url_for('joblisting'))
 
 @app.route('/', methods=['GET'])
 def homepage():
