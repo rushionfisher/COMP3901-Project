@@ -72,6 +72,20 @@ def add_job_post():
     db.close()
     return redirect(url_for('joblisting'))
 
+@app.route('/deletejob/<int:job_id>',methods=['POST','GET'])
+def delete_job(job_id):
+
+    # Connect to the database
+    db = mysql.connector.connect(user='root', password= '', host= 'localhost',database= 'jobListings')
+    cursor = db.cursor()
+    query = "DELETE FROM jobs WHERE jobID = %s"
+    values = (job_id,)
+    cursor.execute(query, values)
+    db.commit()
+
+    return redirect(url_for('joblisting'))
+
+
 @app.route('/', methods=['GET'])
 def homepage():
     return render_template('home.html')
