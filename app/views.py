@@ -1,7 +1,13 @@
-from flask import render_template, request, redirect, url_for, flash, session, abort, send_from_directory
 import mysql.connector
+import os
+from flask import render_template, request, redirect, url_for, flash, session, abort, send_from_directory
 from app import app
-
+from flask import render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from app.forms import ApplicationForm
+from flask_mail import Message
+from app import mail 
+from io import BytesIO
 
 # MySQL database configuration
 
@@ -38,6 +44,39 @@ def joblisting():
 def add_job():
     return render_template('add_job.html')
 
+@app.route('/application/submit', methods=['GET', 'POST'])
+def submit_application():
+    form = ApplicationForm()
+    if form.validate_on_submit():
+        # Save the uploaded files
+        resume = form.resume.data
+        cover_letter = form.cover_letter.data
+
+        # Send the application as an email
+        message = Message('New Job Application', recipients=['hr@example.com'])
+        message.body = f"""
+            First Name: {form.first_name.data}
+            Last Name: {form.last_name.data}
+            Address: {form.address.data}
+            Email: {form.email.data}
+            Phone Number: {form.phone_number.data}
+            Position Applying For: {form.position_applying_for.data}
+        """
+
+        # Encode the file data as bytes
+        resume_bytes = resume.read()
+        cover_letter_bytes = cover_letter.read()
+
+        # Attach the files to the message
+        message.attach(resume.filename, 'resume/pdf', BytesIO(resume_bytes).getvalue())
+        message.attach(cover_letter.filename, 'coverletter/pdf', BytesIO(cover_letter_bytes).getvalue())
+        mail.send(message)
+
+        flash('Application Submitted', 'success')
+
+    return render_template('application.html', form=form)
+
+
 @app.route('/add_job', methods=['POST'])
 def add_job_post():
     db_config = {
@@ -72,6 +111,7 @@ def add_job_post():
     db.close()
     return redirect(url_for('joblisting'))
 
+
 @app.route('/deletejob/<int:job_id>',methods=['POST','GET'])
 def delete_job(job_id):
 
@@ -96,3 +136,10 @@ def aboutpage():
 
 
 
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ), 'danger')
