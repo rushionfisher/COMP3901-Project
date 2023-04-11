@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Job Details </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/jobdetails.css') }}">
+        <link rel = "icon" href = "/static/images/UWI_logo.png" type = "image/x-icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="header">
+            <nav>
+                <a href=""><p>UWI CAREERS AND PLACEMENT</p></a>
+                <div class="nav-links">
+                    <ul>
+                        <li> <a href="/">Home </a> </li>
+                        <li> <a href="about.html">About </a> </li>
+                        <li> <a href="joblisting.html">Job Listings </a> </li>
+                        <li> <a href="">Resume </a> </li>
+                        <li> <a href="">Staff </a> </li>
+                        <li> <a href="">News </a> </li>
+                        <li> <a href="">Login</a> </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="job-details">
+            <h1>{{ jobTitle }}</h1>
+            <h2>{{ employer }}</h2>
+            <p><strong>Date Posted:</strong> {{ DatePosted }}</p>
+            <p><strong>Job Status:</strong> {{ status }}</p>
+            <p><strong>Job Description:</strong> {{ jobDescription }}</p>
+            <p>Click the button below to apply!</p>
+            <form method="post" action="{{ url_for('submit_application') }}">
+                <button type="submit" id="apply-btn"> Apply </button>
+            </form>
+        </div>
+    </body>
+</html>

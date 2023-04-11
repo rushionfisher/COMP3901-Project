@@ -10,17 +10,17 @@ from app import mail
 from io import BytesIO
 
 # MySQL database configuration
-
-# Define a route to display the content from the database on the webpage
-@app.route('/joblisting.html', methods=['GET', 'POST'])
-def joblisting():
-    # Handle search form submission
-    db_config = {
+db_config = {
     'user': 'root',
     'password': '',
     'host': 'localhost',
     'database': 'jobListings',
     }
+# Define a route to display the content from the database on the webpage
+@app.route('/joblisting.html', methods=['GET', 'POST'])
+def joblisting():
+    # Handle search form submission
+    
 
     # Connect to the database
     db = mysql.connector.connect(**db_config)
@@ -28,17 +28,27 @@ def joblisting():
 
     if request.method == 'POST':
         search_term = request.form['search']
-        query = f"SELECT jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%'"
+        query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%'"
         cursor.execute(query)
         data = cursor.fetchall()
     else:
         # Execute a SELECT statement to retrieve all data from the database
-        query = "SELECT jobTitle, employer, DatePosted, status FROM jobs"
+        query = "SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs"
         cursor.execute(query)
         data = cursor.fetchall()
     is_admin = 'true'
     # Render the template and pass the data to the template
     return render_template('joblisting.html', data=data, is_admin=is_admin )
+@app.route('/job/<int:job_id>')
+def job_details(job_id):
+    db = mysql.connector.connect(**db_config)
+    cursor = db.cursor()
+
+    query = "SELECT jobTitle, employer, DatePosted, status, jobDescription FROM jobs WHERE jobID = %s"
+    cursor.execute(query, (job_id,))
+    data = cursor.fetchone()
+    return render_template('jobdetails.html', jobTitle=data[0], employer=data[1], DatePosted=data[2], status=data[3], jobDescription=data[4], job_id=job_id)
+
 
 @app.route('/add_job', methods=['GET'])
 def add_job():

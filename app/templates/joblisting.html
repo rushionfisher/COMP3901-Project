@@ -11,7 +11,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-        <link rel="shortcut icon" href="/static/images/UWI_logo.png" type="image/png">
     <body>
         <div class="header">
             <nav>
@@ -53,15 +52,25 @@
                     </thead>
                     <tbody>
                         {% for row in data %}
-                        <tr>
-                            <td>{{ row[0] }}</td>
+                        <tr class="job-row" data-job-id="{{ row[0] }}">
                             <td>{{ row[1] }}</td>
                             <td>{{ row[2] }}</td>
                             <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
+            <script>
+                const jobRows = document.querySelectorAll('.job-row');
+    
+                jobRows.forEach(row => {
+                    const jobId = row.dataset.jobId;
+                    row.addEventListener('click', () => {
+                        window.location.href = `/job/${jobId}`;
+                    });
+                });
+            </script>
     </body>
 </html>
