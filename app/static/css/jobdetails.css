@@ -20,7 +20,7 @@ body{
 }
 
 .header nav a p{
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'Cinzel', serif;
 }
 
 .nav-links{
@@ -67,4 +67,56 @@ body{
 
 .header nav a{
     text-decoration: none;
+}
+
+    /* Job Details */
+
+.job-details{
+    width: 80%;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 5px;
+    background-color: white;
+}
+
+p{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.job-details h1, .job-details h2{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.job-details h1{
+    margin-top: 20px;
+}
+
+.job-desc{
+    line-height: 155%;
+    padding-left: 27px;
+    padding-right: 27px;
+    text-align: left;
+}
+
+form button{
+    width: 10%;
+    color: white;
+    border-radius: 5px;
+    background-color: #f44336;
+    border: none;
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.9px;
+    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+form button:hover{
+    opacity:0.8;
 }

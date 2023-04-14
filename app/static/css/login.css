@@ -1,0 +1,78 @@
+
+
+    /* Login */
+
+.loginbody{
+    width: 500px;
+    background-color: #fff4;
+    backdrop-filter: blur(15px);
+    position: absolute;
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 7px;
+}
+
+.loginbody form{
+    padding: 40px 40px;
+    box-sizing: border-box;
+}
+
+form .text_field{
+    position: relative;
+    border-bottom: 2px solid #cac7ff;
+    margin: 30px 0;
+}
+
+.text_field input{
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 20px;
+    border:none;
+    outline:none;
+    background-color: transparent;
+    color: #cac7ff;
+}
+
+#logbtn{
+    width: 40%;
+    color: white;
+    border-radius: 5px;
+    background-color: #f44336;
+    border: none;
+    height: 45px;
+    font-size: 19px;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.9px;
+}
+
+#logbtn:hover{
+    opacity: 0.5;
+}
+
+::placeholder{
+    font-family: 'Varela Round', sans-serif;
+    font-size: 20px;
+    color: #cac7ff
+}
+
+.check-box{
+    background-color: transparent;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.check-box label{
+    color: #cac7ff;
+    font-family: 'Varela Round', sans-serif;
+    display: inline;
+}
+
+#rem{
+    height: 18px;
+    width: 18px;
+}

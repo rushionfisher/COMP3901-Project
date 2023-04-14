@@ -8,6 +8,7 @@ from app.forms import ApplicationForm
 from flask_mail import Message
 from app import mail 
 from io import BytesIO
+import time
 
 # MySQL database configuration
 db_config = {
@@ -39,6 +40,8 @@ def joblisting():
     is_admin = 'true'
     # Render the template and pass the data to the template
     return render_template('joblisting.html', data=data, is_admin=is_admin )
+
+
 @app.route('/job/<int:job_id>')
 def job_details(job_id):
     db = mysql.connector.connect(**db_config)
@@ -47,11 +50,13 @@ def job_details(job_id):
     query = "SELECT jobTitle, employer, DatePosted, status, jobDescription FROM jobs WHERE jobID = %s"
     cursor.execute(query, (job_id,))
     data = cursor.fetchone()
-    return render_template('jobdetails.html', jobTitle=data[0], employer=data[1], DatePosted=data[2], status=data[3], jobDescription=data[4], job_id=job_id)
+    is_admin = 'true'
+    return render_template('jobdetails.html', jobTitle=data[0], employer=data[1], DatePosted=data[2], status=data[3], jobDescription=data[4], job_id=job_id, is_admin=is_admin)
 
 
 @app.route('/add_job', methods=['GET'])
 def add_job():
+    session.clear()
     return render_template('add_job.html')
 
 @app.route('/application/submit', methods=['GET', 'POST'])
@@ -119,6 +124,8 @@ def add_job_post():
     db.commit()
     cursor.close()
     db.close()
+    flash('Job added', 'Success')
+    time.sleep(3)
     return redirect(url_for('joblisting'))
 
 
@@ -132,7 +139,7 @@ def delete_job(job_id):
     values = (job_id,)
     cursor.execute(query, values)
     db.commit()
-
+    flash('Job Deleted', 'success')
     return redirect(url_for('joblisting'))
 
 
@@ -143,6 +150,14 @@ def homepage():
 @app.route('/about.html', methods=['GET'])
 def aboutpage():
     return render_template('about.html')
+
+@app.route('/staff.html', methods=['GET'])
+def staff():
+    return render_template('staff.html')
+
+@app.route('/login.html', methods=['GET'])
+def login():
+    return render_template('login.html')
 
 
 

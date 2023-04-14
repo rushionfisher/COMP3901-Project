@@ -1,76 +1,49 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> UWI Careers and Placement </title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/joblisting.css') }}">
-        <link rel = "icon" href = "/static/images/UWI_logo.png" type = "image/x-icon">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500&family=Quicksand:wght@500&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-    <body>
-        <div class="header">
-            <nav>
-                <a href=""><p>UWI CAREERS AND PLACEMENT</p></a>
-                <div class="nav-links">
-                    <ul>
-                        <li> <a href="/">Home </a> </li>
-                        <li> <a href="">About </a> </li>
-                        <li> <a href="joblisting.html">Job Listings </a> </li>
-                        <li> <a href="">Resume </a> </li>
-                        <li> <a href="">Staff </a> </li>
-                        <li> <a href="">News </a> </li>
-                        <li> <a href="">Login</a> </li>
-                    </ul>
-                </div>
-            </nav>
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/joblisting.css') }}">{% endblock%}
+{% block main %}
+    <div class="search-container">
+        <form method="post" action="/joblisting.html" class="searchbar">
+            <input type="text" name="search" id="keyword" placeholder="Enter Job Title...">
+            <button type="submit" id="search-btn">Search</button>
+        </form>
+        
+    </div>
+    {% include 'flash_messages.html' %}
+    {% if is_admin %}
+        <form method="get" action="{{ url_for('add_job') }}">
+            <button type="submit" id="add-job-btn">Add Job</button>
+        </form>
+    {% endif %}
+        <div class="result"> 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Date Posted</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr class="job-row" data-job-id="{{ row[0] }}">
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+        <script>
+            const jobRows = document.querySelectorAll('.job-row');
 
-        <div class="search-container">
-            <form method="post" action="/joblisting.html" class="searchbar">
-                <input type="text" name="search" id="keyword" placeholder="Enter Job Title...">
-                <button type="submit" id="search-btn">Search</button>
-            </form>
-        </div>
-        {% if is_admin %}
-            <form method="get" action="{{ url_for('add_job') }}">
-                <button type="submit" id="add-job-btn">Add Job</button>
-            </form>
-        {% endif %}
-            <div class="result"> 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Job Title</th>
-                            <th>Employer</th>
-                            <th>Date Posted</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in data %}
-                        <tr class="job-row" data-job-id="{{ row[0] }}">
-                            <td>{{ row[1] }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[3] }}</td>
-                            <td>{{ row[4] }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <script>
-                const jobRows = document.querySelectorAll('.job-row');
-    
-                jobRows.forEach(row => {
-                    const jobId = row.dataset.jobId;
-                    row.addEventListener('click', () => {
-                        window.location.href = `/job/${jobId}`;
-                    });
+            jobRows.forEach(row => {
+                const jobId = row.dataset.jobId;
+                row.addEventListener('click', () => {
+                    window.location.href = `/job/${jobId}`;
                 });
-            </script>
-    </body>
-</html>
+            });
+        </script>
+{% endblock%}

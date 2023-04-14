@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Add Job</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/addjob.css') }}">{% endblock%}
+{% block main %}
+  
+  <section class="add-job">
     <h1>Add Job</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     <form method="POST" action="{{ url_for('add_job_post', admin='true') }}">
       <label for="jobTitle">Job Title:</label>
       <input type="text" id="jobTitle" name="jobTitle" required>
@@ -26,5 +32,6 @@
       <br>
       <button type="submit">Add Job</button>
     </form>
-  </body>
-</html>
+  </section>>
+
+{% endblock%}

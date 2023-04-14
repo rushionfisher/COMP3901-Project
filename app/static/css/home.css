@@ -1,51 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-}
 
-body{
-    min-height: 100vh;
-    width: 100%;
-    background-image: linear-gradient(rgba(21, 27, 54, 0.85), rgba(4,9,30,0.85)), url(/static/images/uwi_sign.jpeg);
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.header nav{
-    display: flex;
-    justify-content: right;
-    padding: 25px 25px;
-}
-
-.nav-links ul li{
-    text-decoration: none;
-    display: inline-block;
-    padding-right:25px;
-}
-
-.nav-links ul li a{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    text-decoration: none;
-    letter-spacing: 0.8px;
-}
-
-
-.nav-links ul li::after{
-    content: '';
-    width: 0%;
-    height: 4px;
-    background: #f44336;
-    display: block;
-    margin: auto;
-    transition: 0.5s;
-}
-
-.nav-links ul li:hover::after{
-    width: 100%;
-}
 
 
 .message h1{
@@ -56,9 +9,6 @@ body{
     font-weight: bold;
 }
 
-.header nav a{
-    text-decoration: none;
-}
 
 .message{
     width: 60%;

@@ -1,37 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ABOUT | UWI CAREERS AND PLACEMENT</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Montserrat&display=swap" rel="stylesheet">
-        <link rel="shortcut icon" href="/static/images/UWI_logo.png" type="image/png">
-    </head>
-</head>
-<body>
-    <div class="header">
-        <nav> 
-            <div class="nav-links">
-                <ul>
-                    <li> <a href="/">Home </a> </li>
-                    <li> <a href="about.html">About </a> </li>
-                    <li> <a href="joblisting.html">Job Listings </a> </li>
-                    <li> <a href="">Resume </a> </li>
-                    <li> <a href="">Staff </a> </li>
-                    <li> <a href="">News </a> </li>
-                    <li> <a href="">Login</a> </li>
-                </ul>
-            </div>
-        </nav>
-        <br>
-        <br>
-        <h1>About</h1>
-    </div>
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">{% endblock%}
+{% block main %}
     <div class="body">
         <div class="text">
         <h2>Careers and Placements</h2>
@@ -101,5 +70,4 @@
     </div>
     </div>
     
-</body>
-</html>
+{% endblock%}
