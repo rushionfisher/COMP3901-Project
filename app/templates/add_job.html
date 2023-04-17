@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/addjob.css') }}">{% endblock%}
 {% block main %}
-  
+  <title>Add Job</title>
   <section class="add-job">
     <h1>Add Job</h1>
     {% with messages = get_flashed_messages(with_categories=true) %}

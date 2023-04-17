@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editjob.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="edit-job">
+        <h1>Edit Job</h1>
+        <form method="post" action="{{ url_for('edit_job', job_id=job_id) }}">
+            <label for="jobTitle">Job Title:</label>
+            <input type="text" id="jobTitle" name="jobTitle" value="{{ jobTitle }}">
+            <br>
+            <label for="employer">Employer:</label>
+            <input type="text" id="employer" name="employer" value="{{ employer }}">
+            <br>
+            <label for="datePosted">Date Posted:</label>
+            <input type="date" id="datePosted" name="datePosted" value="{{ DatePosted }}">
+            <br>
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" value="{{ status }}">
+            <br>
+            <label for="jobDescription">Job Description:</label>
+            <textarea id="jobDescription" name="jobDescription">{{ jobDescription }}</textarea>
+            <br>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+{% endblock %}

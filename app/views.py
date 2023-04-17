@@ -88,6 +88,7 @@ def submit_application():
         mail.send(message)
 
         flash('Application Submitted', 'success')
+        return redirect(url_for('joblisting'))
 
     return render_template('application.html', form=form)
 
@@ -127,6 +128,35 @@ def add_job_post():
     flash('Job added', 'Success')
     time.sleep(3)
     return redirect(url_for('joblisting'))
+
+@app.route('/editjob/<int:job_id>', methods=['GET', 'POST'])
+def edit_job(job_id):
+    db = mysql.connector.connect(**db_config)
+    cursor = db.cursor()
+
+    cursor.execute('SELECT * FROM jobs WHERE jobID = %s', (job_id,))
+    job = cursor.fetchone()
+    cursor.close()
+    
+    if job is None:
+        return 'Job not found', 404
+    
+    if request.method == 'POST':
+        jobTitle = request.form['jobTitle']
+        employer = request.form['employer']
+        datePosted = request.form['datePosted']
+        status = request.form['status']
+        jobDescription = request.form['jobDescription']
+        
+        db = mysql.connector.connect(**db_config)
+        cursor = db.cursor()
+        cursor.execute('UPDATE jobs SET jobTitle=%s, employer=%s, DatePosted=%s, status=%s, jobDescription=%s WHERE jobID=%s', (jobTitle, employer, datePosted, status, jobDescription, job_id))
+        db.commit()
+        cursor.close()
+        
+        return redirect(url_for('job_details', job_id=job_id))
+    
+    return render_template('editjob.html', job_id=job_id, jobTitle=job[1], employer=job[2], DatePosted=job[3], status=job[4], jobDescription=job[5])
 
 
 @app.route('/deletejob/<int:job_id>',methods=['POST','GET'])
