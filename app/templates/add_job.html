@@ -1,37 +1,41 @@
 {% extends "base.html" %}
-{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/addjob.css') }}">{% endblock%}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/add_job.css') }}">{% endblock%}
 {% block main %}
-  <title>Add Job</title>
-  <section class="add-job">
-    <h1>Add Job</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    <form method="POST" action="{{ url_for('add_job_post', admin='true') }}">
-      <label for="jobTitle">Job Title:</label>
-      <input type="text" id="jobTitle" name="jobTitle" required>
-      <br>
-      <label for="employer">Employer:</label>
-      <input type="text" id="employer" name="employer" required>
-      <br>
-      <label for="jobDescription">Job Description:</label>
-      <textarea id="jobDescription" name="jobDescription" required></textarea>
-      <br>
-      <label for="status">Status:</label>
-      <input type="text" id="status" name="status" required>
-      <br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-      <br>
-      <label for="DatePosted">Date Posted:</label>
-      <input type="date" id="DatePosted" name="DatePosted" required>
-      <br>
-      <button type="submit">Add Job</button>
-    </form>
-  </section>>
+<div class="form-container">
+  <h2>Add Job</h2>
+  <form method="POST" action="{{ url_for('add_job_post', admin='true') }}">
+  <div class="job-title">
+    <label for="jobTitle">Job Title:</label>
+    <input type="text" id="jobTitle" name="jobTitle" required>
+  </div>
+  
+  <div class="job-title">
+    <label for="employer">Employer:</label>
+    <input type="text" id="employer" name="employer" required>
+  </div>
+
+  <div class="job-desc">
+    <label for="jobDescription">Job Description:</label>
+    <textarea id="jobDescription" name="jobDescription" required></textarea>
+  </div>
+  
+  <div class="job-title">
+    <label for="status">Status:</label>
+    <input type="text" id="status" name="status" required>
+  </div>
+
+  <div class="job-title">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <div class="job-date">
+    <label for="DatePosted">Date Posted:</label>
+    <input type="date" id="DatePosted" name="DatePosted" required>
+  </div>
+
+  <button type="submit" class="form-button">Add Job</button>
+  </form>
+</div>
+
 
 {% endblock%}

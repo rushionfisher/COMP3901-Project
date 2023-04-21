@@ -2,7 +2,7 @@
 {% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">{% endblock%}
 {% block main %}
         <div class="loginbody"> 
-            <form>
+            <form method="POST" action="{{ url_for('login') }}" enctype="multipart/form-data">
                 <div class="text_field"> 
                     <input type="text" id="ID" placeholder="ID Number" name="ID"><br>
                 </div>

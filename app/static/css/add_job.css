@@ -1,0 +1,64 @@
+
+
+.form-container{
+    height: 500px;
+    margin: auto;
+    width: 47%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    
+}
+
+input{
+    padding: 12px 20px;
+    margin-left: 30px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+label{
+    display: block;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-left: 30px;
+}
+
+.form-container h2, p{
+    text-align: center;
+    color: black;
+    padding: 10px;
+}
+
+.job-title{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.job-title input {
+    width: 273px; 
+}
+
+  
+.form-container textarea {
+    width: 90%;
+    height: 80px;
+    border: 1px solid #ccc;
+    margin-left: 30px;
+    border-radius: 3px;
+}
+
+.form-button{
+    display: block;
+    margin: 0 auto;
+    margin-top: 23px;
+    background-color:#DD0426;
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 20px;
+}

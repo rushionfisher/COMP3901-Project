@@ -1,0 +1,140 @@
+body{
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(21, 27, 54, 0.85), rgba(4,9,30,0.85)), url(/static/images/uwi_sign.jpeg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.header nav{
+    display: flex;
+    justify-content: right;
+    padding: 25px 25px;
+}
+
+.header{
+    height: 110px;
+}
+
+.nav-links ul li{
+    text-decoration: none;
+    display: inline-block;
+    padding-right:25px;
+}
+
+.nav-links ul li a{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    letter-spacing: 0.8px;
+}
+
+.nav-links ul li::after{
+    content: '';
+    width: 0%;
+    height: 4px;
+    background: #f44336;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-links ul li:hover::after{
+    width: 100%;
+}
+
+.header nav a{
+    text-decoration: none;
+}
+
+/* Form css begins */
+input{
+    padding: 12px 20px;
+    margin-left: 30px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+label{
+    display: block;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-left: 30px;
+}
+  
+.form-container{
+    margin: auto;
+    width: 48%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+}
+  
+.form-container h2, p{
+    text-align: center;
+}
+  
+.form-name{
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+.form-name input {
+    width: 273px; 
+}
+  
+.form-address textarea {
+    width: 89%;
+    height: 80px;
+    border: 1px solid #ccc;
+    margin-left: 30px;
+    border-radius: 3px;
+}
+  
+.form-number{
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+.form-number input {
+    width: 273px; 
+}
+  
+.form-position textarea{
+    width: 89%;
+    height: 80px;
+    border: 1px solid #ccc;
+    margin-left: 30px;
+    border-radius: 3px;
+}
+  
+.form-upload {
+    display: inline-block;
+    width: 45%; 
+    margin-right: 15px;
+}
+  
+.form-upload:last-child {
+    margin-right: 0;  
+}
+  
+.short{
+    width: 271px; 
+}
+  
+.form-button{
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
+    /* background-color: #f44336;
+    height: 30px;
+    width: 70px; */
+}
+
+
+
+/* Form css ends */
