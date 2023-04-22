@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">{% endblock%}
+{% block main %}
+
+        <div class="upload">
+            <h4> Upload your resume here. </h4>
+            <button> Browse Files </button>
+        </div>
+
+        <div class="recommended-jobs">
+            <h5>Based on your resume, these jobs may be suitable for you.</h5>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Date Posted</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- recommended jobs would be inserted here -->
+                </tbody>
+            </table>
+        </div>
