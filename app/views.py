@@ -4,14 +4,14 @@ from flask import render_template, request, redirect, url_for, flash, session, a
 from app import app
 from flask import render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from app.forms import ApplicationForm
+from app.forms import ApplicationForm, ResumeForm
 from flask_mail import Message
 from app import mail 
 from io import BytesIO
 import time
 from datetime import timedelta
-import bcrypt
-
+from app.ai import cluster_files
+from functools import wraps
 
 # MySQL database configuration
 db_config = {
@@ -20,6 +20,25 @@ db_config = {
     'host': 'localhost',
     'database': 'jobListings',
     }
+
+# Admin Login Required Decorator
+def admin_login_required(func):
+    def wrapper(*args, **kwargs):
+        # Check if user is authenticated and an admin
+        if request.args.get('admin') == 'true':
+            return func(*args, **kwargs)
+        else:
+            return redirect(url_for('login'))
+    return wrapper
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('ID') is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 # Define a route to display the content from the database on the webpage
 @app.route('/joblisting.html', methods=['GET', 'POST'])
 def joblisting():
@@ -40,7 +59,8 @@ def joblisting():
         query = "SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs"
         cursor.execute(query)
         data = cursor.fetchall()
-    is_admin = 'true'
+    is_admin = session['admin'] == 1
+    print(session['admin'])
     # Render the template and pass the data to the template
     return render_template('joblisting.html', data=data, is_admin=is_admin )
 
@@ -53,7 +73,7 @@ def job_details(job_id):
     query = "SELECT jobTitle, employer, DatePosted, status, jobDescription FROM jobs WHERE jobID = %s"
     cursor.execute(query, (job_id,))
     data = cursor.fetchone()
-    is_admin = 'true'
+    is_admin = session['admin'] == 1
     return render_template('jobdetails.html', jobTitle=data[0], employer=data[1], DatePosted=data[2], status=data[3], jobDescription=data[4], job_id=job_id, is_admin=is_admin)
 
 
@@ -195,46 +215,110 @@ def checklogin():
         return 'You are already logged in as ' + session['username']
     else:
         return render_template('home.html')
-      
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    db = mysql.connector.connect(**db_config)
-    cursor = db.cursor()
     if request.method == 'POST':
-        # Get form data
         username = request.form['ID']
         password = request.form['password']
         remember_me = request.form.get('remember')
 
-        # Validate input
-        if not username or not password:
-            error = 'Username and password are required'
-            return render_template('login.html', error=error)
+        db = mysql.connector.connect(**db_config)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        user = cursor.fetchone()
+        cursor.close()
 
-        # Retrieve user data from database
-        query = "SELECT * FROM users WHERE username = %s"
-        cursor.execute(query, (username,))
-        data = cursor.fetchone()
-
-        if not data:
-            error = 'Invalid login'
-            return render_template('login.html', error=error)
-
-        # Check password
-        stored_hash = data[2]
-        if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
-            # Login successful
-            session['username'] = username
+        if user:
+            session['ID'] = username
+            session['admin']= user[3]
             if remember_me:
-                session.permanent = True  
-            message = "Login Successful"
-            return render_template('login.html', message=message)
+                session.permanent = True
+            return redirect(url_for('joblisting'))
         else:
-            # Login unsuccessful
-            error = 'Invalid login'
+            error = 'Invalid name or password'
             return render_template('login.html', error=error)
 
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
+###
+#@app.route('/cluster', methods=['POST'])
+#def cluster():
+ #   folder_path = request.form.get('folder_path')
+  #  file_name = request.form.get('file_name')
+   # cluster_files = cluster_files(folder_path, file_name)
+    #return jsonify(cluster_files)
+
+
+def loadFile():
+    db = mysql.connector.connect(**db_config)
+    cursor = db.cursor()
+
+    # Create directory for job description files
+    if not os.path.exists('job_desc_files'):
+        os.makedirs('job_desc_files')
+
+    # Fetch all columns from the jobs table
+    cursor.execute('SELECT * FROM `jobs`')
+    data = cursor.fetchall()
+
+    # Write job description data to individual files
+    for row in data:
+        job_id = str(row[0])
+        job_desc = str(row).strip()
+
+        file_name = f"{job_id}.txt"
+        file_path = os.path.join('job_desc_files', file_name)
+
+        with open(file_path, 'w+') as f:
+            f.write(job_desc)
+@app.route('/save_resume', methods=['GET', 'POST'])
+def save_resume():
+    form = ResumeForm()
+    if form.validate_on_submit():
+        resume_file = form.resume.data
+        if resume_file:
+            filename = resume_file.filename
+            folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files'
+            resume_file.save(os.path.join(folder_path, filename))
+            # save the filename to the database
+            db = mysql.connector.connect(**db_config)
+            cursor = db.cursor()
+            current_user = session['ID']
+            query = f"UPDATE users SET resume = '{filename}' WHERE username = '{current_user}'"
+            cursor.execute(query)
+            db.commit()
+            flash('Resume saved successfully!', 'success')
+            return redirect(url_for('resumepage'))
+    return render_template('resume.html', title='Save Resume', form=form)
+
+@app.route('/resume', methods=['GET'])
+@login_required
+def resumepage():
+    form = ResumeForm()
+    return render_template('resume.html', form=form)
+
+
+def recommendation():
+    db = mysql.connector.connect(**db_config)
+    cursor = db.cursor()
+    current_user= session['ID']
+    query = f"SELECT resume FROM users WHERE username = '{current_user}'"
+    cursor.execute(query)
+    result = cursor.fetchone()
+    resume_file_name = result[0]
+    loadFile()
+    folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
+    clustered_files = cluster_files(folder_path, resume_file_name)
+
+    # print the list of file names in the same cluster as the user's resume
+    print(clustered_files)
+
+@app.route('/logout')
+def logout():
+    session.clear()  # Remove the 'name' key from the session
+    return redirect(url_for('login'))
 
 def flash_errors(form):
     for field, errors in form.errors.items():

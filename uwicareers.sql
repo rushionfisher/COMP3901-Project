@@ -59,7 +59,8 @@ INSERT INTO `jobs` (`jobID`, `jobTitle`, `employer`, `DatePosted`, `status`, `em
 CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `resume` longtext DEFAULT NULL
+  `resume` longtext DEFAULT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

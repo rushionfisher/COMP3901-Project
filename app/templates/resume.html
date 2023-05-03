@@ -2,11 +2,14 @@
 {% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">{% endblock%}
 {% block main %}
 
-        <div class="upload">
-            <h4> Upload your resume here. </h4>
-            <button> Browse Files </button>
-        </div>
-
+       
+        <form  method="POST" action="{{ url_for('save_resume') }}" enctype="multipart/form-data"></form>
+            <div class="form-upload"> 
+                {{ form.resume.label }}
+                {{ form.resume(required='required', class="short") }}
+            </div>
+            <button class="form-button" type="submit" id="submit">Save</button>
+        </form>
         <div class="recommended-jobs">
             <h5>Based on your resume, these jobs may be suitable for you.</h5>
 
@@ -24,3 +27,4 @@
                 </tbody>
             </table>
         </div>
+{% endblock%}

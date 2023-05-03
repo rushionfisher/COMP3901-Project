@@ -1,0 +1,1 @@
+(8, 'Manager', 'UWI', datetime.date(2023, 4, 8), 'Full-Time', 'shanicejones567890@gmail.com', 'this is atest')

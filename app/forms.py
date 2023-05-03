@@ -14,3 +14,7 @@ class ApplicationForm(FlaskForm):
     resume = FileField('Upload Resume', validators=[DataRequired()])
     cover_letter = FileField('Upload Cover Letter', validators=[DataRequired()])
     submit = SubmitField('Submit Application')
+
+class ResumeForm(FlaskForm):
+    resume = FileField('Upload Cover Letter', validators=[DataRequired()])
+    save = SubmitField('Save Resume')

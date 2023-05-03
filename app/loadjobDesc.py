@@ -1,6 +1,7 @@
 import mysql.connector
+import os
 
-#connect to the database
+# Connect to the database
 db_config = {
     'user': 'capstone',
     'password': 'Password876!@#',
@@ -8,15 +9,24 @@ db_config = {
     'database': 'uwicareers',
 }
 
-# Connect to the database
 db = mysql.connector.connect(**db_config)
 cursor = db.cursor()
 
-#Fetch job description data from database
-cursor.execute('SELECT jobDescription FROM `jobs`')
+# Create directory for job description files
+if not os.path.exists('job_desc_files'):
+    os.makedirs('job_desc_files')
+
+# Fetch all columns from the jobs table
+cursor.execute('SELECT * FROM `jobs`')
 data = cursor.fetchall()
 
-# Open jobDescription file and write data from the database to it
-with open('jobDesc.txt', 'w+') as f:
-    for row in data:
-        f.write(str(row).strip('(').strip(')').strip(',') + '\n')
+# Write job description data to individual files
+for row in data:
+    job_id = str(row[0])
+    job_desc = str(row).strip()
+
+    file_name = f"{job_id}.txt"
+    file_path = os.path.join('job_desc_files', file_name)
+
+    with open(file_path, 'w+') as f:
+        f.write(job_desc)
