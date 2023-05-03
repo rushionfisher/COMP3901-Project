@@ -22,7 +22,7 @@ def cluster_files(folder_path, file_name):
             text = file.read()
             data.append(text)
             file_names.append(filename)
-    with codecs.open(os.path.join(folder_path, file_name), 'r', encoding='utf-8', errors='ignore') as file:
+    with codecs.open(os.path.join('C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files', file_name), 'r', encoding='utf-8', errors='ignore') as file:
         text = file.read()
         data.append(text)
         file_names.append(file_name)

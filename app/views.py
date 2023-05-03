@@ -41,6 +41,7 @@ def login_required(f):
     return decorated_function
 # Define a route to display the content from the database on the webpage
 @app.route('/joblisting.html', methods=['GET', 'POST'])
+@login_required
 def joblisting():
     # Handle search form submission
     
@@ -273,10 +274,15 @@ def loadFile():
 
         with open(file_path, 'w+') as f:
             f.write(job_desc)
+
+
 @app.route('/save_resume', methods=['GET', 'POST'])
+@login_required
 def save_resume():
+  
     form = ResumeForm()
     if form.validate_on_submit():
+        print("hi")
         resume_file = form.resume.data
         if resume_file:
             filename = resume_file.filename
@@ -286,18 +292,19 @@ def save_resume():
             db = mysql.connector.connect(**db_config)
             cursor = db.cursor()
             current_user = session['ID']
+            print(current_user)
+            recommendation()
             query = f"UPDATE users SET resume = '{filename}' WHERE username = '{current_user}'"
             cursor.execute(query)
             db.commit()
             flash('Resume saved successfully!', 'success')
-            return redirect(url_for('resumepage'))
+            return redirect(url_for('save_resume'))
+    else:
+        print(form.errors)
     return render_template('resume.html', title='Save Resume', form=form)
 
-@app.route('/resume', methods=['GET'])
-@login_required
-def resumepage():
-    form = ResumeForm()
-    return render_template('resume.html', form=form)
+
+
 
 
 def recommendation():
