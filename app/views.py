@@ -292,11 +292,11 @@ def save_resume():
             db = mysql.connector.connect(**db_config)
             cursor = db.cursor()
             current_user = session['ID']
-            print(current_user)
-            recommendation()
+            print(current_user) 
             query = f"UPDATE users SET resume = '{filename}' WHERE username = '{current_user}'"
             cursor.execute(query)
             db.commit()
+            recommendation()
             flash('Resume saved successfully!', 'success')
             return redirect(url_for('save_resume'))
     else:
