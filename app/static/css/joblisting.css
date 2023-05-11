@@ -20,7 +20,7 @@ body{
 }
 
 .header nav a p{
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'Cinzel', serif;
 }
 
 .nav-links{
@@ -122,11 +122,15 @@ body{
     font-size: 17px;
     margin-right: 0px;
     padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-family: Montserrat;
     
 }
 
 #search-btn:hover{
     opacity: 0.5;
+    transform: scale(0.95);
 }
 
 .result{
@@ -165,8 +169,8 @@ thead th{
 tbody tr{
     background-color: #b4b8bf;
     text-align: center;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 20px;
+    font-family: Montserrat;
+    font-size: 17px;
 }
 
 tbody tr:hover td{

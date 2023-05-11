@@ -26,6 +26,7 @@ def extract_text_from_pdf(file_path):
 
 
 def cluster_files(folder_path, file_name):
+    print(file_name)
     data = []
     file_names = []
     #doc_to_text()

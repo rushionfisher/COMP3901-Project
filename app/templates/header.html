@@ -1,14 +1,13 @@
 <div class="header">
     <nav>
-        <a href=""><p>UWI CAREERS AND PLACEMENT</p></a>
+        <a href="{{url_for('homepage')}}"><p>UWI CAREERS AND PLACEMENT</p></a>
         <div class="nav-links">
             <ul>
                 <li> <a href="{{url_for('homepage')}}">Home </a> </li>
                 <li> <a href="{{url_for('aboutpage')}}">About </a> </li>
                 <li> <a href="{{url_for('joblisting')}}">Job Listings </a> </li>
                 <li> <a href="{{url_for('clustered_jobs')}}">Resume </a> </li>
-                <li> <a href="{{url_for('staff')}}">Staff </a> </li>
-                <li> <a href="">News </a> </li>
+                <li> <a href="{{url_for('cardev')}}">Career Development </a> </li>
                 {% if 'ID' in session %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>

@@ -83,13 +83,13 @@ body{
 }
 
 p{
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
     padding: 10px;
 }
 
 .job-details h1, .job-details h2{
-    font-family: 'Montserrat', sans-serif;
+    font-family: Poppins;
 }
 
 .job-details h1{
@@ -97,7 +97,7 @@ p{
 }
 
 .job-desc{
-    line-height: 155%;
+    line-height: 175%;
     padding-left: 27px;
     padding-right: 27px;
     text-align: left;
@@ -110,13 +110,16 @@ form button{
     background-color: #f44336;
     border: none;
     height: 45px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: 0.9px;
     margin-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 form button:hover{
     opacity:0.8;
+    transform: scale(0.95);
 }

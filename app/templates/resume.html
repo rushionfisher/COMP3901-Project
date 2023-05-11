@@ -1,31 +1,37 @@
+
 {% extends "base.html" %}
-{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">{% endblock%}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+{% endblock%}
 {% block main %}
+
 
        
         <form method="POST" action="{{ url_for('save_resume') }}" enctype="multipart/form-data">
             {{ form.csrf_token }}
-            <div class="form-upload"> 
-                {{ form.resume.label }}
-                {{ form.resume(required='required', class="short") }}
-            </div>
-            <button class="form-button" type="submit" id="submit">Submit</button>
-        </div>
-        </form>
-        <div class="recommended-jobs">
-            <h5>Based on your resume, these jobs may be suitable for you.</h5>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Job Title</th>
-                        <th>Employer</th>
-                        <th>Date Posted</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
+            {{ form.resume.label }}
+            {{ form.hidden_tag() }}
+                <div class="form-upload"> 
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    {{ form.resume(required='required', class="short") }}
+                </div>
+                <button class="form-button" type="submit" id="submit">Submit</button>
+            </form>
+            
+            <p class="resume-p">Based on your resume, these jobs may be suitable for you.</p>
+            <div class="recommended-jobs">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Employer</th>
+                            <th>Date Posted</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
                     <tbody>
+                        <!-- recommended jobs would be inserted here -->
                         {% for row in jobs %}
                         <tr class="job-row" data-job-id="{{ row[0] }}">
                             <td>{{ row[1] }}</td>
@@ -35,7 +41,7 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                </tbody>
-            </table>
-        </div>
+                </table>
+            </div>
+       
 {% endblock%}

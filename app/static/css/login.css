@@ -38,24 +38,27 @@ form .text_field{
 }
 
 #logbtn{
-    width: 40%;
+    width: 30%;
     color: white;
     border-radius: 5px;
-    background-color: #f44336;
+    background-color: #DD0426;
     border: none;
     height: 45px;
     font-size: 19px;
-    font-family: 'Varela Round', sans-serif;
+    font-family: Montserrat;
     font-weight: bold;
-    letter-spacing: 0.9px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 #logbtn:hover{
     opacity: 0.5;
+    transform: scale(0.95);
 }
 
 ::placeholder{
-    font-family: 'Varela Round', sans-serif;
+    font-family: Nunito;
     font-size: 20px;
     color: #cac7ff
 }
