@@ -25,7 +25,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- recommended jobs would be inserted here -->
+                    <tbody>
+                        {% for row in jobs %}
+                        <tr class="job-row" data-job-id="{{ row[0] }}">
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </tbody>
             </table>
         </div>

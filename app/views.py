@@ -150,7 +150,6 @@ def add_job_post():
     cursor.close()
     db.close()
     flash('Job added', 'Success')
-    time.sleep(3)
     return redirect(url_for('joblisting'))
 
 @app.route('/editjob/<int:job_id>', methods=['GET', 'POST'])
@@ -243,13 +242,7 @@ def login():
 
     else:
         return render_template('login.html')
-###
-#@app.route('/cluster', methods=['POST'])
-#def cluster():
- #   folder_path = request.form.get('folder_path')
-  #  file_name = request.form.get('file_name')
-   # cluster_files = cluster_files(folder_path, file_name)
-    #return jsonify(cluster_files)
+
 
 
 def loadFile():
@@ -282,7 +275,6 @@ def save_resume():
   
     form = ResumeForm()
     if form.validate_on_submit():
-        print("hi")
         resume_file = form.resume.data
         if resume_file:
             filename = resume_file.filename
@@ -296,7 +288,6 @@ def save_resume():
             query = f"UPDATE users SET resume = '{filename}' WHERE username = '{current_user}'"
             cursor.execute(query)
             db.commit()
-            recommendation()
             flash('Resume saved successfully!', 'success')
             return redirect(url_for('save_resume'))
     else:
@@ -304,23 +295,64 @@ def save_resume():
     return render_template('resume.html', title='Save Resume', form=form)
 
 
-
-
-
-def recommendation():
+@app.route('/clustered_jobs')
+def clustered_jobs():
     db = mysql.connector.connect(**db_config)
     cursor = db.cursor()
-    current_user= session['ID']
+    form = ResumeForm()
+    current_user = session['ID']
     query = f"SELECT resume FROM users WHERE username = '{current_user}'"
     cursor.execute(query)
     result = cursor.fetchone()
+
+    if result is None:
+        # User doesn't have a resume
+        return render_template('resume.html',form=form, message='You do not have a resume.')
+
     resume_file_name = result[0]
     loadFile()
     folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
     clustered_files = cluster_files(folder_path, resume_file_name)
 
-    # print the list of file names in the same cluster as the user's resume
-    print(clustered_files)
+    job_ids = []
+    for file_name in clustered_files:
+        if file_name == resume_file_name:
+            continue
+        job_id = int(os.path.splitext(file_name)[0])
+        job_ids.append(job_id)
+
+    if len(job_ids) == 0:
+        # No jobs matched with the resume
+        job_query = "SELECT * FROM jobs"
+        cursor.execute(job_query)
+        jobs = cursor.fetchall()
+        return render_template('resume.html',jobs=jobs,form=form, message='Your resume did not match with any jobs.')
+
+    else:
+        job_query = f"SELECT * FROM jobs WHERE jobID IN ({','.join(str(id) for id in job_ids)})"
+        cursor.execute(job_query)
+        jobs = cursor.fetchall()
+
+    
+    
+
+    return render_template('resume.html',form=form, jobs=jobs)
+
+# def recommendation():
+#     db = mysql.connector.connect(**db_config)
+#     cursor = db.cursor()
+#     current_user= session['ID']
+#     query = f"SELECT resume FROM users WHERE username = '{current_user}'"
+#     cursor.execute(query)
+#     result = cursor.fetchone()
+#     resume_file_name = result[0]
+#     loadFile()
+#     folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
+#     clustered_files = cluster_files(folder_path, resume_file_name)
+
+#     # print the list of file names in the same cluster as the user's resume
+#     print(clustered_files)
+#     return clustered_files
 
 @app.route('/logout')
 def logout():
