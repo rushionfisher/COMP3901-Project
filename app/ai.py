@@ -31,7 +31,7 @@ def cluster_files(folder_path, file_name):
     processed_data = [preprocess_text(text) for text in data]
     vectorizer = TfidfVectorizer(stop_words='english')
     X = vectorizer.fit_transform(processed_data)
-    kmeans = KMeans(n_clusters=5, init='random', max_iter=400, n_init=10)
+    kmeans = KMeans(n_clusters=2, init='random', max_iter=400, n_init=10)
     kmeans.fit(X)
     labels = kmeans.labels_
     print(labels)

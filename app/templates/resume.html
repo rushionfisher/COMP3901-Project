@@ -7,16 +7,17 @@
 
             
             <form method="POST" action="{{ url_for('save_resume') }}" enctype="multipart/form-data">
-                {{ form.resume.label }}
-                {{ form.hidden_tag() }}
-               
+       
+        <form method="POST" action="{{ url_for('save_resume') }}" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            {{ form.resume.label }}
+            {{ form.hidden_tag() }}
                 <div class="form-upload"> 
                     <i class="fas fa-cloud-upload-alt"></i>
                     {{ form.resume(required='required', class="short") }}
                 </div>
                 <button class="form-button" type="submit" id="submit">Submit</button>
             </form>
-       
             
             <p class="resume-p">Based on your resume, these jobs may be suitable for you.</p>
             <div class="recommended-jobs">
