@@ -15,10 +15,10 @@ from functools import wraps
 
 # MySQL database configuration
 db_config = {
-    'user': 'root',
-    'password': '',
+    'user': 'capstone',
+    'password': 'Password876!@#',
     'host': 'localhost',
-    'database': 'jobListings',
+    'database': 'uwicareers',
     }
 
 # Admin Login Required Decorator
@@ -205,9 +205,9 @@ def homepage():
 def aboutpage():
     return render_template('about.html')
 
-@app.route('/staff.html', methods=['GET'])
-def staff():
-    return render_template('staff.html')
+@app.route('/cardev.html', methods=['GET'])
+def cardev():
+    return render_template('cardev.html')
 
 
 @app.route('/check')
@@ -286,17 +286,17 @@ def save_resume():
         resume_file = form.resume.data
         if resume_file:
             filename = resume_file.filename
-            folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files'
+            folder_path = 'C:/Users/user/Documents/SCHOOL/YEAR 3, SEM 2/COMP3901/COMP3901-Project/resume_files'
             resume_file.save(os.path.join(folder_path, filename))
             # save the filename to the database
             db = mysql.connector.connect(**db_config)
             cursor = db.cursor()
             current_user = session['ID']
             print(current_user)
-            recommendation()
             query = f"UPDATE users SET resume = '{filename}' WHERE username = '{current_user}'"
             cursor.execute(query)
             db.commit()
+            recommendation()
             flash('Resume saved successfully!', 'success')
             return redirect(url_for('save_resume'))
     else:
@@ -316,7 +316,7 @@ def recommendation():
     result = cursor.fetchone()
     resume_file_name = result[0]
     loadFile()
-    folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
+    folder_path = 'C:/Users/user/Documents/SCHOOL/YEAR 3, SEM 2/COMP3901/COMP3901-Project/job_desc_files'
     clustered_files = cluster_files(folder_path, resume_file_name)
 
     # print the list of file names in the same cluster as the user's resume

@@ -1,53 +1,3 @@
-body{
-    min-height: 100vh;
-    width: 100%;
-    background-image: linear-gradient(rgba(21, 27, 54, 0.85), rgba(4,9,30,0.85)), url(/static/images/uwi_sign.jpeg);
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.header nav{
-    display: flex;
-    justify-content: right;
-    padding: 25px 25px;
-}
-
-.header{
-    height: 110px;
-}
-
-.nav-links ul li{
-    text-decoration: none;
-    display: inline-block;
-    padding-right:25px;
-}
-
-.nav-links ul li a{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    text-decoration: none;
-    letter-spacing: 0.8px;
-}
-
-.nav-links ul li::after{
-    content: '';
-    width: 0%;
-    height: 4px;
-    background: #f44336;
-    display: block;
-    margin: auto;
-    transition: 0.5s;
-}
-
-.nav-links ul li:hover::after{
-    width: 100%;
-}
-
-.header nav a{
-    text-decoration: none;
-}
 
 /* Form css begins */
 input{
@@ -64,11 +14,15 @@ label{
     font-weight: bold;
     padding-top: 20px;
     margin-left: 30px;
+    margin-bottom: 5px;
+    font-family: Montserrat;
+    letter-spacing: 0.8px;
 }
   
 .form-container{
     margin: auto;
-    width: 48%;
+    margin-bottom: 40px;
+    width: 55%;
     padding: 10px;
     background-color: white;
     border-radius: 5px;
@@ -76,6 +30,12 @@ label{
   
 .form-container h2, p{
     text-align: center;
+}
+
+.form-container h2{
+    font-family: Poppins;
+    letter-spacing: 1px;
+    font-size: 30px;
 }
   
 .form-name{
@@ -130,11 +90,28 @@ label{
     display: block;
     margin: 0 auto;
     margin-top: 40px;
-    /* background-color: #f44336;
-    height: 30px;
-    width: 70px; */
+    background-color: #f44336;
+    color: white;
+    font-weight: bold;
+    padding: 12px 50px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    font-family: Montserrat;
+    letter-spacing: 1px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
 }
 
+.form-button:hover{
+    opacity: 0.8;
+    transform: scale(0.95);
+}
+
+hr{
+    margin-top: 10px;
+}
 
 
 /* Form css ends */

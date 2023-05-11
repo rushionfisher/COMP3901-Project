@@ -1,0 +1,108 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.wrapper{
+    background-color: #fff4;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.tile{
+    background-color: white;
+    width: 80%;
+    display: block;
+    border-radius: 6px;
+    padding: 30px;
+    text-decoration: center;
+    margin: 30px;
+    
+}
+
+.tile p{
+    line-height: 170%;
+    width: 90%;
+    font-size: 16px;
+    font-family: Montserrat;
+
+}
+
+h6{
+    font-family: Poppins;
+    font-size: 30px;
+    color: #f44336;
+    margin-bottom: 10px;
+    letter-spacing: 1.2px;
+
+}
+
+#ch{
+    display:none;
+}
+
+#ch:checked ~ .content{
+    display:block;
+}
+
+#ch:checked ~ label{
+    display: none;
+}
+
+label{
+    display:inline-block;
+    cursor: pointer;
+    color: white;
+    background-color: #2e4599;
+    padding: 9px 13px;
+    border-radius: 3px;
+    margin-top: 12px;
+    letter-spacing: 1px;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+label:hover{
+    opacity: 0.9;
+    transform: scale(0.95);
+}
+
+.content{
+    display: none;
+}
+
+#ch1{
+    display:none;
+}
+
+#ch1:checked ~ .content{
+    display:block;
+}
+
+#ch1:checked ~ label{
+    display: none;
+}
+
+#ch2{
+    display:none;
+}
+
+#ch2:checked ~ .content{
+    display:block;
+}
+
+#ch2:checked ~ label{
+    display: none;
+}
+
+h5{
+    font-size: 17px;
+    letter-spacing: 0.7px;
+    font-family: Poppins;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}

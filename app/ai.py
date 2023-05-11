@@ -15,6 +15,7 @@ def preprocess_text(text):
     return ' '.join(words)
 
 def cluster_files(folder_path, file_name):
+    print(file_name)
     data = []
     file_names = []
     for filename in os.listdir(folder_path):
@@ -22,7 +23,7 @@ def cluster_files(folder_path, file_name):
             text = file.read()
             data.append(text)
             file_names.append(filename)
-    with codecs.open(os.path.join('C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files', file_name), 'r', encoding='utf-8', errors='ignore') as file:
+    with codecs.open(os.path.join('C:/Users/user/Documents/SCHOOL/YEAR 3, SEM 2/COMP3901/COMP3901-Project/resume_files', file_name), 'r', encoding='utf-8', errors='ignore') as file:
         text = file.read()
         data.append(text)
         file_names.append(file_name)
