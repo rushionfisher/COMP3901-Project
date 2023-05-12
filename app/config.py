@@ -14,4 +14,5 @@ class Config(object):
     MAIL_USERNAME = 'shanicejones567890@gmail.com'
     MAIL_PASSWORD = 'psxpjsmystgvpqqc'
     MAIL_DEFAULT_SENDER = 'shanicejones567890@gmail.com'
-    
+    resume_folder= os.environ.get('resume_folder')
+    job_folder= os.environ.get('job_folder','C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files')

@@ -15,12 +15,13 @@ from functools import wraps
 
 # MySQL database configuration
 db_config = {
-    'user': 'capstone',
-    'password': 'Password876!@#',
+    'user': 'root',
+    'password': '',
     'host': 'localhost',
-    'database': 'uwicareers',
+    'database': 'jobListings',
     }
-
+resume_folder= 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files'
+job_folder= 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
 # Admin Login Required Decorator
 def admin_login_required(func):
     def wrapper(*args, **kwargs):
@@ -119,12 +120,6 @@ def submit_application():
 
 @app.route('/add_job', methods=['POST'])
 def add_job_post():
-    db_config = {
-    'user': 'root',
-    'password': '',
-    'host': 'localhost',
-    'database': 'jobListings',
-    }
 
     # Connect to the database
     db = mysql.connector.connect(**db_config)
@@ -278,8 +273,7 @@ def save_resume():
         resume_file = form.resume.data
         if resume_file:
             filename = resume_file.filename
-            folder_path = 'C:/Users/user/Documents/SCHOOL/YEAR 3, SEM 2/COMP3901/COMP3901-Project/resume_files'
-            resume_file.save(os.path.join(folder_path, filename))
+            resume_file.save(os.path.join(resume_folder, filename))
             # save the filename to the database
             db = mysql.connector.connect(**db_config)
             cursor = db.cursor()
@@ -296,6 +290,7 @@ def save_resume():
 
 
 @app.route('/clustered_jobs')
+@login_required
 def clustered_jobs():
     db = mysql.connector.connect(**db_config)
     cursor = db.cursor()
@@ -311,8 +306,7 @@ def clustered_jobs():
 
     resume_file_name = result[0]
     loadFile()
-    folder_path = 'C:/Users/user/Documents/SCHOOL/YEAR 3, SEM 2/COMP3901/COMP3901-Project/job_desc_files'
-    clustered_files = cluster_files(folder_path, resume_file_name)
+    clustered_files = cluster_files(job_folder, resume_file_name)
 
     job_ids = []
     for file_name in clustered_files:
@@ -338,21 +332,6 @@ def clustered_jobs():
 
     return render_template('resume.html',form=form, jobs=jobs)
 
-# def recommendation():
-#     db = mysql.connector.connect(**db_config)
-#     cursor = db.cursor()
-#     current_user= session['ID']
-#     query = f"SELECT resume FROM users WHERE username = '{current_user}'"
-#     cursor.execute(query)
-#     result = cursor.fetchone()
-#     resume_file_name = result[0]
-#     loadFile()
-#     folder_path = 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
-#     clustered_files = cluster_files(folder_path, resume_file_name)
-
-#     # print the list of file names in the same cluster as the user's resume
-#     print(clustered_files)
-#     return clustered_files
 
 @app.route('/logout')
 def logout():

@@ -43,5 +43,15 @@
                     </tbody>
                 </table>
             </div>
+            <script>
+                const jobRows = document.querySelectorAll('.job-row');
+    
+                jobRows.forEach(row => {
+                    const jobId = row.dataset.jobId;
+                    row.addEventListener('click', () => {
+                        window.location.href = `/job/${jobId}`;
+                    });
+                });
+            </script>
        
 {% endblock%}
