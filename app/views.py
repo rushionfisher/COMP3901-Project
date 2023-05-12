@@ -171,6 +171,7 @@ def edit_job(job_id):
         cursor.execute('UPDATE jobs SET jobTitle=%s, employer=%s, DatePosted=%s, status=%s, jobDescription=%s WHERE jobID=%s', (jobTitle, employer, datePosted, status, jobDescription, job_id))
         db.commit()
         cursor.close()
+        flash('Job Edited', 'success')
         
         return redirect(url_for('job_details', job_id=job_id))
     
@@ -203,6 +204,10 @@ def aboutpage():
 def cardev():
     return render_template('cardev.html')
 
+@app.route('/contact', methods=['GET'])
+def contact():
+    return render_template('contact.html')
+
 
 @app.route('/check')
 def checklogin():
@@ -230,10 +235,11 @@ def login():
             session['admin']= user[3]
             if remember_me:
                 session.permanent = True
+            flash('Logged in successfully', 'success')
             return redirect(url_for('joblisting'))
         else:
-            error = 'Invalid name or password'
-            return render_template('login.html', error=error)
+            flash('Invalid username or password. Please try again','danger')
+            return render_template('login.html')
 
     else:
         return render_template('login.html')
@@ -336,7 +342,8 @@ def clustered_jobs():
 @app.route('/logout')
 def logout():
     session.clear()  # Remove the 'name' key from the session
-    return redirect(url_for('login'))
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('homepage'))
 
 def flash_errors(form):
     for field, errors in form.errors.items():

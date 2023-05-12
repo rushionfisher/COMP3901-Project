@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+<script src="https://kit.fontawesome.com/1ed5e69d05.js" crossorigin="anonymous"></script>
+{% endblock%}
+{% block main %}
+
+    <br>
+    <div class="body">
+        <div class="form-container">
+            <h3>Send us a Message</h3>
+            <p>Please fill out the required fields.</p>
+            <hr>
+            <form>
+                <div class="form-name">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name">
+                </div>
+              
+                <div class="form-name">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name">
+                </div>
+
+                <div class="form-area">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+              
+                <div class="form-area">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject">
+                </div>
+              
+                <div class="form-message">
+                    <label for="address">Message:</label>
+                    <textarea id="address" name="address"></textarea>
+                </div>
+                <button class="form-button" type="submit" id="submit">Submit</button>
+              </form>
+        </div>
+        <div class="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15177.530619588468!2d-76.76192536352607!3d18.00743663458516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb3f25665dbaa7%3A0xe9751e003ca27e7!2sUniversity%20of%20the%20West%20Indies!5e0!3m2!1sen!2sjm!4v1681205915462!5m2!1sen!2sjm" width="450" height="465.5" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>  
+        <div class="icons">
+            <div class="icon-i">
+                <br>
+                <br>
+                <i class="fa-solid fa-location-dot"></i>
+                <p>The University of the West Indies Mona, Kingston 7, Jamaica</p>
+            </div>
+            <div class="icon-i">
+                <i class="fa-solid fa-phone"></i>
+                <p>(876) 927-1650</p>
+            </div>
+            <div class="icon-i">
+                <i class="fa-solid fa-envelope"></i>
+                <p>placement@uwimona.edu.jm</p>
+            </div>
+            <div class="icon-i">
+                <br>
+                <i class="fa-solid fa-clock"></i>
+                <p>Monday - Fridays 8:30am - 4:30pm</p>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
