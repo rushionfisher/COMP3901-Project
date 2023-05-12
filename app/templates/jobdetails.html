@@ -10,7 +10,7 @@
             <p><strong>Job Status:</strong> {{ status }}</p>
             <p><strong>Job Description:</strong> {{ jobDescription }}</p>
             <p>Click the button below to apply!</p>
-            <form method="post" action="{{ url_for('submit_application') }}">
+            <form method="post" action="{{ url_for('submit_application', job_id=job_id) }}">
                 <button type="submit" id="apply-btn"> Apply </button>
             </form>
             {% if is_admin %}

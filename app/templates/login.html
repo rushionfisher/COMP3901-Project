@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">{% endblock%}
 {% block main %}
+    {% include 'flash_messages.html' %}
         <div class="loginbody"> 
             <form method="POST" action="{{ url_for('login') }}" enctype="multipart/form-data">
                 <div class="text_field"> 

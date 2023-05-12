@@ -9,7 +9,7 @@
         
         <hr>
 
-        <form  method="POST" action="{{ url_for('submit_application') }}" enctype="multipart/form-data">
+        <form  method="POST" action="{{ url_for('submit_application', job_id=job_id) }}" enctype="multipart/form-data">
             {{ form.csrf_token }}
             <div class="form-name">
                 {{ form.first_name.label }}

@@ -1,0 +1,20 @@
+.flash {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .flash-success {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+  }
+  
+  .flash-error {
+    background-color: #ffcdd2;
+    color: #c62828;
+  }
+  
+  .flash-info {
+    background-color: #bbdefb;
+    color: #1565c0;
+  }

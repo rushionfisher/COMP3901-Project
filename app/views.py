@@ -84,16 +84,22 @@ def add_job():
     session.clear()
     return render_template('add_job.html')
 
-@app.route('/application/submit', methods=['GET', 'POST'])
-def submit_application():
+@app.route('/application/submit/<int:job_id>', methods=['GET', 'POST'])
+def submit_application(job_id):
     form = ApplicationForm()
     if form.validate_on_submit():
         # Save the uploaded files
         resume = form.resume.data
         cover_letter = form.cover_letter.data
+        db = mysql.connector.connect(**db_config)
+        cursor = db.cursor()
 
+        cursor.execute('SELECT * FROM jobs WHERE jobID = %s', (job_id,))
+        job = cursor.fetchone()
+        cursor.close()
+        print(job[5])
         # Send the application as an email
-        message = Message('New Job Application', recipients=['hr@example.com'])
+        message = Message('New Job Application', recipients=[job[5]])
         message.body = f"""
             First Name: {form.first_name.data}
             Last Name: {form.last_name.data}
@@ -115,7 +121,7 @@ def submit_application():
         flash('Application Submitted', 'success')
         return redirect(url_for('joblisting'))
 
-    return render_template('application.html', form=form)
+    return render_template('application.html', form=form, job_id=job_id)
 
 
 @app.route('/add_job', methods=['POST'])
@@ -175,7 +181,7 @@ def edit_job(job_id):
         
         return redirect(url_for('job_details', job_id=job_id))
     
-    return render_template('editjob.html', job_id=job_id, jobTitle=job[1], employer=job[2], DatePosted=job[3], status=job[4], jobDescription=job[5])
+    return render_template('editjob.html', job_id=job_id, jobTitle=job[1], employer=job[2], DatePosted=job[3], status=job[4], jobDescription=job[6])
 
 
 @app.route('/deletejob/<int:job_id>',methods=['POST','GET'])
@@ -238,7 +244,8 @@ def login():
             flash('Logged in successfully', 'success')
             return redirect(url_for('joblisting'))
         else:
-            flash('Invalid username or password. Please try again','danger')
+            flash('Invalid username or password. Please try again','error')
+  
             return render_template('login.html')
 
     else:
@@ -289,7 +296,7 @@ def save_resume():
             cursor.execute(query)
             db.commit()
             flash('Resume saved successfully!', 'success')
-            return redirect(url_for('save_resume'))
+            return redirect(url_for('clustered_jobs'))
     else:
         print(form.errors)
     return render_template('resume.html', title='Save Resume', form=form)
@@ -305,38 +312,38 @@ def clustered_jobs():
     query = f"SELECT resume FROM users WHERE username = '{current_user}'"
     cursor.execute(query)
     result = cursor.fetchone()
-
-    if result is None:
+    print(result)
+    if result[0] is None:
         # User doesn't have a resume
         return render_template('resume.html',form=form, message='You do not have a resume.')
-
-    resume_file_name = result[0]
-    loadFile()
-    clustered_files = cluster_files(job_folder, resume_file_name)
-
-    job_ids = []
-    for file_name in clustered_files:
-        if file_name == resume_file_name:
-            continue
-        job_id = int(os.path.splitext(file_name)[0])
-        job_ids.append(job_id)
-
-    if len(job_ids) == 0:
-        # No jobs matched with the resume
-        job_query = "SELECT * FROM jobs"
-        cursor.execute(job_query)
-        jobs = cursor.fetchall()
-        return render_template('resume.html',jobs=jobs,form=form, message='Your resume did not match with any jobs.')
-
     else:
-        job_query = f"SELECT * FROM jobs WHERE jobID IN ({','.join(str(id) for id in job_ids)})"
-        cursor.execute(job_query)
-        jobs = cursor.fetchall()
+        resume_file_name = result[0]
+        loadFile()
+        clustered_files = cluster_files(job_folder,resume_folder, resume_file_name)
 
-    
-    
+        job_ids = []
+        for file_name in clustered_files:
+            if file_name == resume_file_name:
+                continue
+            job_id = int(os.path.splitext(file_name)[0])
+            job_ids.append(job_id)
 
-    return render_template('resume.html',form=form, jobs=jobs)
+        if len(job_ids) == 0:
+            # No jobs matched with the resume
+            job_query = "SELECT * FROM jobs"
+            cursor.execute(job_query)
+            jobs = cursor.fetchall()
+            return render_template('resume.html',jobs=jobs,form=form, message='Your resume did not match with any jobs.')
+
+        else:
+            job_query = f"SELECT * FROM jobs WHERE jobID IN ({','.join(str(id) for id in job_ids)})"
+            cursor.execute(job_query)
+            jobs = cursor.fetchall()
+
+        
+        
+
+        return render_template('resume.html',form=form, jobs=jobs)
 
 
 @app.route('/logout')

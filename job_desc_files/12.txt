@@ -1,0 +1,1 @@
+(12, 'Window Treatment Technician', 'Hardware & Lumber Ltd', datetime.date(2023, 5, 5), 'Full Time', 'h&l@hardwarelum.com', 'The Window Treatments Technician will safely cut and assemble material to manufacture blinds and awnings within the standards of quality and efficiency to support the timely delivery of customer orders, and positively impact customer satisfaction. ')
