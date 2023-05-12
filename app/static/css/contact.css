@@ -1,0 +1,127 @@
+
+
+
+/* form css begins */
+.form-container{
+    height: 446px;
+    margin: auto;
+    width: 48%;
+    padding: 10px;
+    background-color: white;
+    float: left;
+    margin-left: 115px;
+}
+
+input{
+    padding: 12px 20px;
+    margin-left: 30px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+label{
+    display: block;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-left: 30px;
+}
+
+.form-container h3, .form-container p{
+    text-align: center;
+    color: black;
+    font-family: Poppins;
+    padding: 10px;
+}
+  
+.form-name{
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+.form-name input {
+    width: 273px; 
+}
+
+.form-area{
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+.form-area input {
+    width: 273px; 
+}
+
+.form-message textarea {
+    width: 89%;
+    height: 80px;
+    border: 1px solid #ccc;
+    margin-left: 30px;
+    border-radius: 3px;
+}
+
+.form-button{
+    display: block;
+    margin: 0 auto;
+    margin-top: 13px;
+    background-color:#DD0426;
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 7px;
+    font-family: Montserrat;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-button:hover{
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+/* form css ends */
+
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .icon-i {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 25px;
+    max-width: 200px;
+  }
+
+
+.icons i{
+    background-color: #DD0426;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    color: white;
+    text-align: center;
+    margin-top: 32px;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center; 
+    margin-bottom: 10px;
+}
+
+.icon-i p {
+    text-align: center;
+    color: white;
+    font-family: Montserrat;
+    margin-bottom: 20px;
+  }
+
+
+

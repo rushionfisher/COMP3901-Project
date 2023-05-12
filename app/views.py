@@ -209,6 +209,10 @@ def aboutpage():
 def cardev():
     return render_template('cardev.html')
 
+@app.route('/contact', methods=['GET'])
+def contact():
+    return render_template('contact.html')
+
 
 @app.route('/check')
 def checklogin():

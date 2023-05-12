@@ -37,7 +37,7 @@ def cluster_files(folder_path, file_name):
             #print(text)
             file_names.append(filename)
     
-    target_file_path = os.path.join("C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files", file_name)
+    target_file_path = os.path.join("C:/Users/user/Documents/SCHOOL/YEAR 3, SEM 2/COMP3901/COMP3901-Project/resume_files", file_name)
     if file_name.endswith('.docx'):
         target_text = extract_text_from_docx(target_file_path)
     elif file_name.endswith('.pdf'):
