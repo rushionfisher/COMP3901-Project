@@ -212,3 +212,21 @@ tbody tr:hover td{
 .page-links a:hover {
     opacity: 0.8;
 }
+
+
+#add-job-btn {
+    color: white;
+    background-color: #DD0426;
+    border-radius: 20px;
+    border: none;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: 17px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-family: Montserrat;
+    display: block;
+    margin: 0 auto;
+    width: 150px; 
+}
