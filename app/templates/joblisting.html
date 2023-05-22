@@ -36,6 +36,19 @@
                 </tbody>
             </table>
         </div>
+        <div class="pagination">
+            <div class="page-info">
+                Page {{ current_page }} of {{ total_pages }}
+            </div>
+            <div class="page-links">
+                {% if current_page > 1 %}
+                    <a href="/joblisting.html?page={{ current_page - 1 }}">Previous</a>
+                {% endif %}
+                {% if current_page < total_pages %}
+                    <a href="/joblisting.html?page={{ current_page + 1 }}">Next</a>
+                {% endif %}
+            </div>
+        </div>    
         <script>
             const jobRows = document.querySelectorAll('.job-row');
 

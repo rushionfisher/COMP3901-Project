@@ -12,6 +12,7 @@ import time
 from datetime import timedelta
 from app.ai import cluster_files
 from functools import wraps
+from math import ceil
 
 # MySQL database configuration
 db_config = {
@@ -20,8 +21,9 @@ db_config = {
     'host': 'localhost',
     'database': 'jobListings',
     }
-resume_folder= 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/resume_files'
-job_folder= 'C:/Users/Shanice/Documents/COMP3901-Project/COMP3901-Project/job_desc_files'
+resume_folder= app.config['RESUME_FOLDER']
+job_folder= app.config['JOB_FOLDER']
+
 # Admin Login Required Decorator
 def admin_login_required(func):
     def wrapper(*args, **kwargs):
@@ -40,6 +42,7 @@ def login_required(f):
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
+
 # Define a route to display the content from the database on the webpage
 @app.route('/joblisting.html', methods=['GET', 'POST'])
 @login_required
@@ -51,22 +54,38 @@ def joblisting():
     db = mysql.connector.connect(**db_config)
     cursor = db.cursor()
 
+    # Retrieve the page number from the query parameters
+    page = int(request.args.get('page', 1))
+
+    # Calculate the offset
+    offset = (page - 1) * 10
+
     if request.method == 'POST':
         search_term = request.form['search']
-        query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%'"
+        query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%' LIMIT 10 OFFSET {offset}"
         cursor.execute(query)
         data = cursor.fetchall()
     else:
         # Execute a SELECT statement to retrieve all data from the database
-        query = "SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs"
+        query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs LIMIT 10 OFFSET {offset}"
         cursor.execute(query)
         data = cursor.fetchall()
+    
+    # Calculate the total number of jobs
+    q = f"SELECT COUNT(*) FROM jobs"
+    cursor.execute(q)
+    total_jobs = cursor.fetchone()[0]
+    
+    # Calculate the total number of pages
+    total_pages = ceil(total_jobs / 10)
+    
     is_admin = session['admin'] == 1
     print(session['admin'])
+    
     # Render the template and pass the data to the template
-    return render_template('joblisting.html', data=data, is_admin=is_admin )
+    return render_template('joblisting.html', data=data, is_admin=is_admin, current_page=page, total_pages=total_pages )
 
-
+#Route for job Details
 @app.route('/job/<int:job_id>')
 def job_details(job_id):
     db = mysql.connector.connect(**db_config)
@@ -81,9 +100,10 @@ def job_details(job_id):
 
 @app.route('/add_job', methods=['GET'])
 def add_job():
-    session.clear()
     return render_template('add_job.html')
 
+
+#Route for job application
 @app.route('/application/submit/<int:job_id>', methods=['GET', 'POST'])
 def submit_application(job_id):
     form = ApplicationForm()
@@ -99,7 +119,7 @@ def submit_application(job_id):
         cursor.close()
         print(job[5])
         # Send the application as an email
-        message = Message('New Job Application', recipients=[job[5]])
+        message = Message('New Job Application', recipients=['shanicejones567890@gmail.com'])
         message.body = f"""
             First Name: {form.first_name.data}
             Last Name: {form.last_name.data}
@@ -123,7 +143,7 @@ def submit_application(job_id):
 
     return render_template('application.html', form=form, job_id=job_id)
 
-
+#Route for adding a job
 @app.route('/add_job', methods=['POST'])
 def add_job_post():
 
@@ -150,11 +170,13 @@ def add_job_post():
     db.commit()
     cursor.close()
     db.close()
-    flash('Job added', 'Success')
+    flash('Job added', 'success')
     return redirect(url_for('joblisting'))
 
+#Edit job for admin
 @app.route('/editjob/<int:job_id>', methods=['GET', 'POST'])
 def edit_job(job_id):
+    # Connect to the database
     db = mysql.connector.connect(**db_config)
     cursor = db.cursor()
 
@@ -183,7 +205,7 @@ def edit_job(job_id):
     
     return render_template('editjob.html', job_id=job_id, jobTitle=job[1], employer=job[2], DatePosted=job[3], status=job[4], jobDescription=job[6])
 
-
+#Route for deleting a job
 @app.route('/deletejob/<int:job_id>',methods=['POST','GET'])
 def delete_job(job_id):
 
@@ -222,7 +244,7 @@ def checklogin():
     else:
         return render_template('home.html')
 
-
+#Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -252,7 +274,7 @@ def login():
         return render_template('login.html')
 
 
-
+#Function for loading the jobs in the database into a file
 def loadFile():
     db = mysql.connector.connect(**db_config)
     cursor = db.cursor()
@@ -276,7 +298,7 @@ def loadFile():
         with open(file_path, 'w+') as f:
             f.write(job_desc)
 
-
+#Route for save resume button
 @app.route('/save_resume', methods=['GET', 'POST'])
 @login_required
 def save_resume():
@@ -301,7 +323,7 @@ def save_resume():
         print(form.errors)
     return render_template('resume.html', title='Save Resume', form=form)
 
-
+#Route for generating the recommended jobs
 @app.route('/clustered_jobs')
 @login_required
 def clustered_jobs():
@@ -313,7 +335,7 @@ def clustered_jobs():
     cursor.execute(query)
     result = cursor.fetchone()
     print(result)
-    if result[0] is None:
+    if result is None:
         # User doesn't have a resume
         return render_template('resume.html',form=form, message='You do not have a resume.')
     else:

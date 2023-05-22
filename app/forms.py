@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, FileField
 from wtforms.validators import DataRequired, Email, Length
-
+from flask_wtf.file import FileAllowed
 
 class ApplicationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired(), Length(max=50)])
@@ -16,5 +16,5 @@ class ApplicationForm(FlaskForm):
     submit = SubmitField('Submit Application')
 
 class ResumeForm(FlaskForm):
-    resume = FileField('Upload Resume Here', validators=[DataRequired()])
+    resume = FileField('Upload Resume Here', validators=[DataRequired(), FileAllowed(['docx', 'pdf'], 'Only .docx or .pdf files allowed')])
     save = SubmitField('Save Resume')
