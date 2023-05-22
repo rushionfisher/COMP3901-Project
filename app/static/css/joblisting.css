@@ -266,15 +266,3 @@ tbody tr:hover td{
 .page-links a:hover {
     opacity: 0.8;
 }
-#add-job-btn{
-    display: block;
-    margin: 0 auto;
-    margin-top: 23px;
-    background-color:#DD0426;
-    border: none;
-    color: white;
-    padding: 10px 22px;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 20px;
-}
