@@ -1,0 +1,1 @@
+(6, 'Internship', 'CIBC FCIB', datetime.date(2023, 5, 5), 'Part Time', 'cibcfcibtalent@feonbeb.com', 'We are recruiting university students for internships in the following disciplines: Banking,Finance, Economics, Accounting, Computer Science, Information Technology, Data Analytics, Human Resources and Marketing.')

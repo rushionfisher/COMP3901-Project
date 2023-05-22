@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/application.css') }}">{% endblock%}
+{% block main %}
+<section>
+        
+    <div class="form-container">
+        <h2>Application Form</h2>
+        <p>Please fill out the required fields and attach your Resume and Cover Letter below</p>
+        
+        <hr>
+
+        <form  method="POST" action="{{ url_for('submit_application', job_id=job_id) }}" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <div class="form-name">
+                {{ form.first_name.label }}
+                {{ form.first_name(required='required') }}
+            </div>
+            <div class="form-name">
+                {{ form.last_name.label }}
+                {{ form.last_name(required='required') }}
+            </div>
+            <div class="form-address">
+                {{ form.address.label }}
+                {{ form.address(required='required') }}
+            </div>
+            <div class="form-number">
+                {{ form.email.label }}
+                {{ form.email(required='required') }}
+            </div>
+            <div class="form-number">
+                {{ form.phone_number.label }}
+                {{ form.phone_number(required='required') }}
+            </div>
+            <div class="form-position">
+                {{ form.position_applying_for.label }}
+                {{ form.position_applying_for(required='required') }}
+            </div>
+            <div class="form-upload"> 
+                {{ form.resume.label }}
+                {{ form.resume(required='required', class="short") }}
+            </div>
+            <div class="form-upload">
+                {{ form.cover_letter.label }}
+                {{ form.cover_letter(required='required', class="short") }}
+            </div>
+            <button class="form-button" type="submit" id="submit">Submit</button>
+        </form>
+        <br>
+        
+    </div>
+</section>
+{% endblock %}

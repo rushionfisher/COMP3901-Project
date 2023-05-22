@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/jobdetails.css') }}">{% endblock%}
+{% block main %}
+
+        <div class="job-details" job_id={{job_id}}>
+            <h1>{{ jobTitle }}</h1>
+            <h2>{{ employer }}</h2>
+            <p><strong>Date Posted:</strong> {{ DatePosted }}</p>
+            <p><strong>Job Status:</strong> {{ status }}</p>
+            <p><strong>Job Description:</strong> {{ jobDescription }}</p>
+            <p>Click the button below to apply!</p>
+            <form method="post" action="{{ url_for('submit_application', job_id=job_id) }}">
+                <button type="submit" id="apply-btn"> Apply </button>
+            </form>
+            {% if is_admin %}
+            <form method="get" action="{{ url_for('delete_job', job_id=job_id) }}">
+                <button type="submit" id="Delete-job-btn">Delete</button>
+            </form>
+            <form method="get" action="{{ url_for('edit_job', job_id=job_id) }}">
+                <button type="submit" id="Edit-job-btn">Edit</button>
+            </form>
+            {% endif %}
+        </div>
+    </body>
+</html>
+{% endblock%}

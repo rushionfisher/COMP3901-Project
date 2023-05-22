@@ -1,0 +1,117 @@
+
+/* Form css begins */
+input{
+    padding: 12px 20px;
+    margin-left: 30px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+label{
+    display: block;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+    font-family: Montserrat;
+    letter-spacing: 0.8px;
+}
+  
+.form-container{
+    margin: auto;
+    margin-bottom: 40px;
+    width: 55%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+}
+  
+.form-container h2, p{
+    text-align: center;
+}
+
+.form-container h2{
+    font-family: Poppins;
+    letter-spacing: 1px;
+    font-size: 30px;
+}
+  
+.form-name{
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+.form-name input {
+    width: 273px; 
+}
+  
+.form-address textarea {
+    width: 89%;
+    height: 80px;
+    border: 1px solid #ccc;
+    margin-left: 30px;
+    border-radius: 3px;
+}
+  
+.form-number{
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+.form-number input {
+    width: 273px; 
+}
+  
+.form-position textarea{
+    width: 89%;
+    height: 80px;
+    border: 1px solid #ccc;
+    margin-left: 30px;
+    border-radius: 3px;
+}
+  
+.form-upload {
+    display: inline-block;
+    width: 45%; 
+    margin-right: 15px;
+}
+  
+.form-upload:last-child {
+    margin-right: 0;  
+}
+  
+.short{
+    width: 271px; 
+}
+  
+.form-button{
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
+    background-color: #f44336;
+    color: white;
+    font-weight: bold;
+    padding: 12px 50px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    font-family: Montserrat;
+    letter-spacing: 1px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.form-button:hover{
+    opacity: 0.8;
+    transform: scale(0.95);
+}
+
+hr{
+    margin-top: 10px;
+}
+
+
+/* Form css ends */

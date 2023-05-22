@@ -1,0 +1,34 @@
+
+.body{
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    justify-content: center;
+}
+
+
+.text{
+    width: 80%;
+    background-color: white;
+    font-family: Montserrat;
+    line-height: 150%;
+    border-radius: 7px;
+    padding: 50px;
+    margin: 20px;
+}
+
+.text p {
+    padding:15px;
+}
+
+h2{
+    letter-spacing: 0.9px;
+    color: #f44336;
+    text-align: center;
+    font-family: Poppins;
+    margin-bottom: 10px;
+}
+
+.body ul{
+    margin-left: 50px;
+}

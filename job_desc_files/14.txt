@@ -1,0 +1,1 @@
+(14, 'Treasury Analyst', 'Supreme Ventures Group', datetime.date(2023, 5, 22), 'Full Time', 'shanicejones567890@gmail.com', 'The Treasury Analyst is responsible for providing excellent customer service to all clients and personnel. Verifying the accuracy of all transactions and maintaining account integrity, as well as verifying the input into the accounting system.')

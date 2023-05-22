@@ -1,0 +1,58 @@
+
+
+
+.message h1{
+    font-size: 30px;
+    letter-spacing: 5px;
+    color: white;
+    font-family: 'Libre Baskerville', serif;
+    font-weight: bold;
+}
+
+
+.message{
+    width: 60%;
+    color: white;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.message p{
+    margin: 10px 0 0px;
+    font-size: 14px;
+    color: white;
+    font-size: 19px;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 160%;
+}
+
+.message img{
+    height: 150px;
+    width: 150px;
+}
+
+.loginbtn{
+    display:inline-block;
+    color: white;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 12px 40px;
+    font-size: 18px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    margin: 18px;
+    transition: 0.4s;
+    font-family: Montserrat;
+}
+
+.loginbtn:hover{
+    border: 1px solid #f44336;
+    background: #f44336;
+    
+}
