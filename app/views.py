@@ -13,6 +13,7 @@ from datetime import timedelta
 from app.ai import cluster_files
 from functools import wraps
 from math import ceil
+from math import ceil
 
 # MySQL database configuration
 db_config = {
@@ -60,13 +61,21 @@ def joblisting():
     # Calculate the offset
     offset = (page - 1) * 10
 
+    # Retrieve the page number from the query parameters
+    page = int(request.args.get('page', 1))
+
+    # Calculate the offset
+    offset = (page - 1) * 10
+
     if request.method == 'POST':
         search_term = request.form['search']
+        query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%' LIMIT 10 OFFSET {offset}"
         query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs WHERE jobTitle LIKE '%{search_term}%' LIMIT 10 OFFSET {offset}"
         cursor.execute(query)
         data = cursor.fetchall()
     else:
         # Execute a SELECT statement to retrieve all data from the database
+        query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs LIMIT 10 OFFSET {offset}"
         query = f"SELECT jobID,jobTitle, employer, DatePosted, status FROM jobs LIMIT 10 OFFSET {offset}"
         cursor.execute(query)
         data = cursor.fetchall()
@@ -79,10 +88,21 @@ def joblisting():
     # Calculate the total number of pages
     total_pages = ceil(total_jobs / 10)
     
+    
+    # Calculate the total number of jobs
+    q = f"SELECT COUNT(*) FROM jobs"
+    cursor.execute(q)
+    total_jobs = cursor.fetchone()[0]
+    
+    # Calculate the total number of pages
+    total_pages = ceil(total_jobs / 10)
+    
     is_admin = session['admin'] == 1
     print(session['admin'])
     
+    
     # Render the template and pass the data to the template
+    return render_template('joblisting.html', data=data, is_admin=is_admin, current_page=page, total_pages=total_pages )
     return render_template('joblisting.html', data=data, is_admin=is_admin, current_page=page, total_pages=total_pages )
 
 #Route for job Details
